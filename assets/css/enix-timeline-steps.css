@@ -1,0 +1,536 @@
+/* =============================================================================
+   Enix Timeline Steps — Frontend CSS
+   @package EnixAddons
+   ============================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+/* ── CSS Variables ──────────────────────────────────────────────────────────── */
+.enix-timeline-section {
+  --enix-accent:           #6366F1;
+  --enix-accent-glow:      rgba(99, 102, 241, 0.4);
+  --enix-card-bg:          #FFFFFF;
+  --enix-card-border:      #E2E8F0;
+  --enix-card-border-hover: #6366F1;
+  --enix-text-main:        #1E293B;
+  --enix-text-muted:       #475569;
+  --enix-radius:           12px;
+  --enix-line-color:       #E2E8F0;
+
+  width: 100%;
+  padding: 60px 20px;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--enix-text-main);
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.enix-timeline-section * {
+  box-sizing: border-box;
+}
+
+/* ── Wrapper ────────────────────────────────────────────────────────────────── */
+.enix-timeline-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  padding: 20px 0;
+}
+
+/* ── Central Glowing Line ───────────────────────────────────────────────────── */
+.enix-timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(216, 169, 30, 0)    0%,
+    var(--enix-line-color)   15%,
+    var(--enix-line-color)   85%,
+    rgba(216, 169, 30, 0)    100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── Timeline Item ──────────────────────────────────────────────────────────── */
+.enix-timeline-item {
+  position: relative;
+  width: 100%;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ── Dot ────────────────────────────────────────────────────────────────────── */
+.enix-timeline-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at top left, #ffd86b, var(--enix-accent));
+  box-shadow:
+    0 0 0 6px rgba(216, 169, 30, 0.15),
+    0 0 20px var(--enix-accent-glow);
+  z-index: 3;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              box-shadow 0.4s ease;
+}
+
+.enix-timeline-item:hover .enix-timeline-dot {
+  transform: translate(-50%, -50%) scale(1.3);
+  box-shadow:
+    0 0 0 8px rgba(216, 169, 30, 0.25),
+    0 0 30px var(--enix-accent);
+}
+
+/* ── Connector Line (dot → card) ────────────────────────────────────────────── */
+.enix-timeline-item::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: calc(50% - 200px);
+  height: 1px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.enix-timeline-item.enix-no-connector::before {
+  display: none;
+}
+
+.enix-timeline-item.enix-left::before {
+  right: 50%;
+  background: linear-gradient(270deg, rgba(216, 169, 30, 0.6), rgba(216, 169, 30, 0));
+}
+
+.enix-timeline-item.enix-right::before {
+  left: 50%;
+  background: linear-gradient(90deg, rgba(216, 169, 30, 0.6), rgba(216, 169, 30, 0));
+}
+
+/* ── Card Positioning ───────────────────────────────────────────────────────── */
+.enix-timeline-item.enix-left {
+  justify-content: flex-start;
+}
+
+.enix-timeline-item.enix-right {
+  justify-content: flex-end;
+}
+
+.enix-timeline-item.enix-left .enix-timeline-card {
+  margin-right: 50px;
+}
+
+.enix-timeline-item.enix-right .enix-timeline-card {
+  margin-left: 50px;
+}
+
+/* ── Card — Reference Site Style ─────────────────────────────────────────────── */
+.enix-timeline-card {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: var(--enix-card-bg);
+  border: 1px solid var(--enix-card-border);
+  border-radius: var(--enix-radius);
+  padding: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  z-index: 2;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.enix-timeline-item.enix-left .enix-timeline-card {
+  text-align: right;
+  border-right: 2px solid transparent;
+}
+
+.enix-timeline-item.enix-right .enix-timeline-card {
+  text-align: left;
+  border-left: 2px solid transparent;
+}
+
+.enix-timeline-item:hover .enix-timeline-card {
+  border-color: var(--enix-card-border-hover);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* ── Card Header ────────────────────────────────────────────────────────────── */
+.enix-timeline-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+
+.enix-timeline-item.enix-left .enix-timeline-card-header {
+  flex-direction: row-reverse;
+}
+
+/* ── Icon Box ───────────────────────────────────────────────────────────────── */
+.enix-icon-box {
+  width: 58px;
+  height: 58px;
+  min-width: 58px;
+  border-radius: 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(216, 169, 30, 0.2) 0%,
+    rgba(216, 169, 30, 0.05) 100%
+  );
+  border: 1px solid rgba(216, 169, 30, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    inset 0 2px 5px rgba(255, 255, 255, 0.1),
+    0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s ease;
+  flex-shrink: 0;
+}
+
+.enix-timeline-card:hover .enix-icon-box {
+  background: linear-gradient(
+    135deg,
+    rgba(216, 169, 30, 0.35) 0%,
+    rgba(216, 169, 30, 0.1) 100%
+  );
+  transform: scale(1.08) rotate(5deg);
+  border-color: rgba(216, 169, 30, 0.5);
+  box-shadow: 0 0 20px var(--enix-accent-glow);
+}
+
+.enix-icon-box i {
+  /* color cascades from .enix-icon-box so Elementor color control works */
+  color: inherit;
+  font-size: 22px;
+  display: block;
+  line-height: 1;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.enix-icon-box svg {
+  width: 26px;
+  height: 26px;
+  /* stroke also inherits – useful for custom outline SVGs */
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke 0.3s ease;
+}
+
+/* FA SVG mode: paths use currentColor fill */
+.enix-icon-box svg path,
+.enix-icon-box svg rect,
+.enix-icon-box svg circle {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* Outline/custom SVG – keep stroke, remove fill */
+.enix-icon-box svg[data-fa-i2svg] path {
+  fill: currentColor;
+  stroke: none;
+}
+
+.enix-icon-box img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.enix-timeline-card:hover .enix-icon-box i,
+.enix-timeline-card:hover .enix-icon-box svg {
+  color: #ffffff;
+  stroke: #ffffff;
+}
+
+/* Image Box Styling */
+.enix-image-box {
+  padding: 8px;
+}
+
+.enix-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* ── Card Content ───────────────────────────────────────────────────────────── */
+.enix-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.enix-step-label {
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--enix-accent);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.enix-card-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--enix-text-main);
+  margin: 0 0 15px 0;
+}
+
+.enix-card-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--enix-text-muted);
+  margin: 0;
+}
+
+/* ── Scroll-in Animations ───────────────────────────────────────────────────── */
+.enix-timeline-item .enix-timeline-card {
+  opacity: 0;
+  filter: blur(5px);
+  transition:
+    opacity   0.6s ease,
+    transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    filter    0.6s ease,
+    border-color 0.4s ease,
+    box-shadow   0.4s ease;
+}
+
+.enix-timeline-item.enix-left .enix-timeline-card {
+  transform: translateX(-40px);
+}
+
+.enix-timeline-item.enix-right .enix-timeline-card {
+  transform: translateX(40px);
+}
+
+.enix-timeline-item .enix-timeline-card.enix-show {
+  opacity: 1;
+  transform: translate(0, 0);
+  filter: blur(0);
+}
+
+/* Elementor editor: always show cards */
+.elementor-editor-active .enix-timeline-card {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────────── */
+@media (max-width: 991px) {
+  .enix-timeline-section {
+    padding: 50px 15px;
+  }
+
+  .enix-timeline-wrapper {
+    padding: 0;
+  }
+
+  .enix-timeline-line {
+    left: 30px;
+    transform: none;
+  }
+
+  .enix-timeline-item,
+  .enix-timeline-item.enix-left,
+  .enix-timeline-item.enix-right {
+    justify-content: flex-start;
+    padding-left: 65px;
+    margin-bottom: 30px;
+  }
+
+  .enix-timeline-item::before {
+    display: none;
+  }
+
+  .enix-timeline-dot {
+    left: 30px;
+    transform: translate(-50%, -50%);
+  }
+
+  .enix-timeline-item.enix-left .enix-timeline-card,
+  .enix-timeline-item.enix-right .enix-timeline-card {
+    margin: 0;
+    max-width: 100%;
+    text-align: left;
+  }
+
+  .enix-timeline-item.enix-left .enix-timeline-card-header,
+  .enix-timeline-item.enix-right .enix-timeline-card-header {
+    flex-direction: row;
+  }
+
+  .enix-timeline-item .enix-timeline-card {
+    transform: translateY(30px);
+  }
+}
+
+@media (max-width: 575px) {
+  .enix-timeline-section {
+    padding: 40px 12px;
+  }
+
+  .enix-timeline-line {
+    left: 20px;
+  }
+
+  .enix-timeline-dot {
+    left: 20px;
+    width: 14px;
+    height: 14px;
+  }
+
+  .enix-timeline-item,
+  .enix-timeline-item.enix-left,
+  .enix-timeline-item.enix-right {
+    padding-left: 45px;
+  }
+
+  .enix-timeline-card {
+    padding: 22px 18px;
+    border-radius: 20px;
+  }
+
+  .enix-icon-box {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 14px;
+  }
+
+  .enix-icon-box i {
+    font-size: 18px;
+  }
+
+  .enix-icon-box svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .enix-card-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .enix-card-text {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+/* ── Icon Color: Elementor Control Override Support ───────────── */
+/* Makes the "Icon Color" Elementor control work for ALL icon types */
+/* (Font Awesome font-mode, FA SVG-mode, and custom SVGs)          */
+
+.enix-icon-box {
+  /* Default = accent. Elementor's inline <style> will override.   */
+  color: var(--enix-accent);
+}
+
+/* FA Font mode */
+.enix-icon-box > i {
+  color: inherit !important;
+}
+
+/* FA SVG mode (renders <svg> with <path fill="currentColor">) */
+.enix-icon-box > svg {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* Custom outline SVG icons */
+.enix-icon-box > svg[style*="stroke"],
+.enix-icon-box > svg.svg-inline--fa {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* Hover – white */
+.enix-timeline-card:hover .enix-icon-box {
+  color: #ffffff;
+}
+
+/* ── Description Text Style ───────────────────────────────────────────────────── */
+.enix-timeline-description {
+  color: #4A4A4A;
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 15px 0;
+}
+
+.enix-timeline-description p {
+  margin: 0 0 10px 0;
+}
+
+.enix-timeline-description p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Icon List Alignment ─────────────────────────────────────────────────────── */
+.enix-icon-list {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0 0 0;
+}
+
+.enix-icon-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Icon o text er gap komano holo */
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #475569; /* Muted slate color */
+  width: 100%;
+}
+
+.enix-icon-list li:last-child {
+  margin-bottom: 0;
+}
+
+/* Left Alignment - Text k icon er kache rakhar jonno */
+.icon-align-left {
+  justify-content: flex-start;
+}
+
+/* Right Alignment - Screenshot er moto text left e r icon ekbare right e thakbe */
+.icon-align-right {
+  justify-content: space-between; 
+}
+
+/* Icon Style */
+.enix-icon {
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  color: #6366F1; /* Indigo icon */
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.enix-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Default spacing fix */
+.enix-list-text {
+  flex-grow: 0; /* Extra gap bondho korbe */
+}
