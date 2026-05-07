@@ -76,6 +76,9 @@ function enix_init()
 
 	// Enqueue frontend assets.
 	add_action('elementor/frontend/after_enqueue_styles', 'enix_enqueue_frontend_assets');
+	
+	// Initialize plugin updater.
+	require_once ENIX_ADDONS_PATH . 'includes/class-enix-updater.php';
 }
 
 /**

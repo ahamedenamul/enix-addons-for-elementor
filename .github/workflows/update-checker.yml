@@ -1,0 +1,57 @@
+name: Update Plugin Info
+
+on:
+  push:
+    tags:
+      - 'v*'
+  release:
+    types: [published]
+
+jobs:
+  update-info:
+    runs-on: ubuntu-latest
+    name: Update Plugin Information
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Create update info JSON
+      run: |
+        # Get latest tag
+        LATEST_TAG=$(git describe --tags --abbrev=0)
+        VERSION=${LATEST_TAG#v}
+        
+        # Create update info JSON
+        cat > update-info.json << EOF
+        {
+          "version": "$VERSION",
+          "download_url": "https://github.com/ahamedenamul/enix-addons-for-elementor/releases/latest/download/enix-addons-for-elementor-v$VERSION.zip",
+          "last_updated": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+          "requires": "5.8",
+          "tested": "6.5",
+          "requires_php": "7.4",
+          "sections": {
+            "description": "A premium collection of advanced widgets for Elementor with professional design and functionality.",
+            "changelog": "$(sed -n '/= 1.3.0/,/^$/p' CHANGELOG.md | sed '1d;$d' | sed 's/^[*] //g' | head -10 | tr '\n' ' ')"
+          },
+          "icons": {
+            "1x": "https://raw.githubusercontent.com/ahamedenamul/enix-addons-for-elementor/main/assets/images/enix-logo.png",
+            "2x": "https://raw.githubusercontent.com/ahamedenamul/enix-addons-for-elementor/main/assets/images/enix-logo.png"
+          }
+        }
+        EOF
+        
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
+        publish_branch: gh-pages
+        keep_files: true
+        force_orphan: true
