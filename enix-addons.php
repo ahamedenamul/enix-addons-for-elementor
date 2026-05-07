@@ -24,7 +24,7 @@ if (!defined('ABSPATH')) {
 }
 
 // ─── Constants ───────────────────────────────────────────────────────────────
-define('ENIX_ADDONS_VERSION', '1.3.1');
+define('ENIX_ADDONS_VERSION', '1.3.2');
 define('ENIX_ADDONS_FILE', __FILE__);
 define('ENIX_ADDONS_PATH', plugin_dir_path(__FILE__));
 define('ENIX_ADDONS_URL', plugin_dir_url(__FILE__));

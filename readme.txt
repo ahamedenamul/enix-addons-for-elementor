@@ -4,7 +4,7 @@ Tags:              elementor, elementor addons, accordion, faq, toggle, elemento
 Requires at least: 5.8
 Tested up to:      6.5
 Requires PHP:      7.4
-Stable tag:        1.3.1
+Stable tag:        1.3.2
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,17 @@ PHP 7.4 or higher.
 7. Mobile responsive view of all widgets on smartphone devices.
 
 == Changelog ==
+
+= 1.3.2 – 2024-05-07 =
+* **IMPROVED:** Enhanced update checker reliability and performance
+* **IMPROVED:** Better GitHub API integration for version checking
+* **FIXED:** Resolved potential timeout issues with update notifications
+* **UPDATED:** Optimized update message display for better user experience
+
+= 1.3.1 – 2024-05-07 =
+* **TEST:** Update system testing and verification
+* **IMPROVED:** Automatic update notification system
+* **UPDATED:** GitHub Actions workflow for releases
 
 = 1.3.0 – 2024-05-07 =
 * **NEW:** Timeline Steps widget for process visualization and sequential events
