@@ -1,10 +1,10 @@
 <?php
 /**
  * Plugin Name:       Enix Addons – Advanced Addons for Elementor
- * Plugin URI:        https://github.com/ahamedenamul
+ * Plugin URI:        https://github.com/ahamedenamul/enix-addons-for-elementor
  * Description:       A premium collection of advanced widgets for Elementor, starting with the Interactive Advanced Accordion.
- * Version:           1.0.4
- * Author:            Enamul Islam
+ * Version:           1.0.0
+ * Author:            Enix Solutions Ltd (By Enamul Islam)
  * Author URI:        https://github.com/ahamedenamul
  * License:           GPL-2.0+
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
