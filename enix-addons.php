@@ -3,7 +3,7 @@
  * Plugin Name:       Enix Addons – Advanced Addons for Elementor
  * Plugin URI:        https://github.com/ahamedenamul
  * Description:       A premium collection of advanced widgets for Elementor, including the Interactive Advanced Accordion, Timeline Steps, Faded Heading, Inline Link Preview, and Weather.
- * Version:           1.3.0
+ * Version:           1.3.2
  * Author:            Enix Solutions Ltd (By Enamul Islam)
  * Author URI:        https://github.com/ahamedenamul
  * License:           GPL-2.0+
