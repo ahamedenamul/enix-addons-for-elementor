@@ -4,7 +4,7 @@
  * Plugin URI:        https://github.com/ahamedenamul
  * Description:       A premium collection of advanced widgets for Elementor, including the Interactive Advanced Accordion, Timeline Steps, Faded Heading, Inline Link Preview, and Weather.
  * Version:           1.3.0
- * Author:            Enix Solutions Ltd (By Enamul Islam)
+ * Author:            Enix Solutions (By Enamul Islam)
  * Author URI:        https://github.com/ahamedenamul
  * License:           GPL-2.0+
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -22,6 +22,22 @@
 if (!defined('ABSPATH')) {
 	exit;
 }
+
+require_once plugin_dir_path( __FILE__ ) . 'plugin-update-checker/plugin-update-checker.php';
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
+// Change "YOUR-REPO-NAME" and "YOUR-PLUGIN-SLUG" below!
+$enixUpdateChecker = PucFactory::buildUpdateChecker(
+	'https://github.com/ahamedenamul/enix-addons-for-elementor/',
+	__FILE__,
+	'enix-addons-for-elementor'
+);
+
+// Set the stable branch
+$enixUpdateChecker->setBranch( 'main' );
+
+// Optional: Uncomment below if the repo is private
+// $enixUpdateChecker->setAuthentication('your-github-access-token');
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 define('ENIX_ADDONS_VERSION', '1.3.0');

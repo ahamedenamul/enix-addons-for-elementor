@@ -1,5 +1,4 @@
-name: Create Release
-
+name: Create Enix Release
 on:
   push:
     tags:
@@ -8,40 +7,22 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    name: Create Release
-    
+    permissions:
+      contents: write
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.0'
-        
-    - name: Install dependencies
-      run: |
-        npm install -g composer
-        composer install --no-dev --optimize-autoloader
-        
-    - name: Create plugin zip
-      run: |
-        mkdir -p release
-        rsync -av --exclude-from=.gitignore --exclude='.github' --exclude='.git' ./ release/enix-addons-for-elementor/
-        cd release
-        zip -r enix-addons-for-elementor-v${{ github.ref_name }}.zip enix-addons-for-elementor/
-        
-    - name: Create Release
-      uses: softprops/action-gh-release@v1
-      with:
-        files: release/enix-addons-for-elementor-v${{ github.ref_name }}.zip
-        generate_release_notes: true
-        draft: false
-        prerelease: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Create Plugin ZIP
+        run: |
+          mkdir enix-addons-for-elementor
+          rsync -rr --exclude='.git/' --exclude='.github/' --exclude='enix-addons-for-elementor' ./ enix-addons-for-elementor/
+          zip -r enix-addons-for-elementor.zip enix-addons-for-elementor/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: enix-addons-for-elementor.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
