@@ -1,0 +1,232 @@
+/* ====================================================================
+   Enix Addons – Advanced Accordion Widget Styles
+   Plugin:  Enix Addons for Elementor
+   Author:  Enamul Islam  |  https://enamulislam.com
+   Version: 1.0.0
+   ==================================================================== */
+
+/* ── Wrapper ──────────────────────────────────────────────────────── */
+.enix-accordion-wrapper {
+	display: flex;
+	align-items: flex-start;
+	gap: 40px;
+	width: 100%;
+}
+
+/* Desktop: Image left | Accordion right */
+.enix-accordion-wrapper.enix-desktop-image-first {
+	flex-direction: row-reverse;
+}
+
+/* ── Left Column (accordion list) ────────────────────────────────── */
+.enix-accordion-left {
+	flex: 0 0 45%;
+	min-width: 0;
+}
+
+/* ── Right Column (image panel) ──────────────────────────────────── */
+.enix-accordion-right {
+	flex: 1 1 0;
+	min-width: 0;
+	/* CSS Grid stacking: all images occupy the same grid cell.
+	   This enables smooth opacity crossfade without display:none hacks. */
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr;
+	align-items: start;
+}
+
+/* ── Each image slot ─────────────────────────────────────────────── */
+.enix-accordion-img {
+	/* Stack all images in the same grid cell */
+	grid-area: 1 / 1;
+	/* Hidden state */
+	opacity: 0;
+	pointer-events: none;
+	/* Smooth crossfade – duration overridden by Elementor control */
+	transition: opacity 500ms ease, transform 500ms ease;
+	transform: translateY( 10px );
+	/* Prevent collapsed height when inactive */
+	visibility: hidden;
+}
+
+/* Active image */
+.enix-accordion-img.enix-img-active {
+	opacity: 1;
+	pointer-events: auto;
+	transform: translateY( 0 );
+	visibility: visible;
+}
+
+.enix-accordion-img img {
+	width: 100%;
+	height: auto;
+	display: block;
+	border-radius: 16px;
+	object-fit: cover;
+	transition: inherit;
+}
+
+/* ── Accordion Item ──────────────────────────────────────────────── */
+.enix-accordion-item {
+	border-radius: 10px;
+	overflow: hidden;
+	cursor: pointer;
+	transition: box-shadow 0.3s ease;
+	outline: none;
+}
+
+.enix-accordion-item + .enix-accordion-item {
+	margin-top: 10px;
+}
+
+.enix-accordion-item:focus-visible {
+	box-shadow: 0 0 0 3px rgba( 59, 91, 219, 0.4 );
+}
+
+/* ── Header ──────────────────────────────────────────────────────── */
+.enix-accordion-header {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	padding: 18px 24px;
+	background-color: #f0f4ff;
+	user-select: none;
+	transition: background-color 0.3s ease;
+}
+
+.enix-accordion-item.enix-active .enix-accordion-header {
+	background-color: #3b5bdb;
+}
+
+/* ── Title ───────────────────────────────────────────────────────── */
+.enix-accordion-title {
+	flex: 1;
+	margin: 0;
+	font-size: 1rem;
+	font-weight: 600;
+	line-height: 1.4;
+	color: #1a1f3c;
+	transition: color 0.3s ease;
+}
+
+.enix-accordion-item.enix-active .enix-accordion-title {
+	color: #ffffff;
+}
+
+/* ── Left Icon ───────────────────────────────────────────────────── */
+.enix-accordion-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	color: #3b5bdb;
+	transition: color 0.3s ease;
+	line-height: 1;
+}
+
+.enix-accordion-icon i,
+.enix-accordion-icon svg {
+	color: inherit;
+	display: block;
+}
+
+.enix-accordion-item.enix-active .enix-accordion-icon {
+	color: #74c0fc;
+}
+
+/* ── Right Arrow Icon ────────────────────────────────────────────── */
+.enix-accordion-arrow {
+	display: flex;
+	align-items: center;
+	margin-left: auto;
+	flex-shrink: 0;
+	color: #3b5bdb;
+	transition: color 0.3s ease, transform 0.35s cubic-bezier( 0.4, 0, 0.2, 1 );
+}
+
+.enix-accordion-arrow i,
+.enix-accordion-arrow svg {
+	color: inherit;
+	display: block;
+}
+
+.enix-accordion-item.enix-active .enix-accordion-arrow {
+	color: #74c0fc;
+	transform: rotate( 180deg );
+}
+
+/* ── Description (smooth slide) ──────────────────────────────────── */
+.enix-accordion-desc {
+	/* display toggled by JS slideDown/slideUp – CSS provides visual style */
+	display: none;
+	overflow: hidden;
+	padding: 14px 24px 18px;
+	font-size: 0.9rem;
+	line-height: 1.7;
+	color: #555e7b;
+	background-color: #ffffff;
+	border: 1px solid #e8ecff;
+	border-top: 0;
+	border-radius: 0 0 10px 10px;
+}
+
+.enix-accordion-desc p:last-child {
+	margin-bottom: 0;
+}
+
+/* Elementor editor: keep desc visible so controls are accessible */
+.elementor-editor-active .enix-accordion-desc {
+	display: block !important;
+}
+
+/* ── Responsive: Mobile ──────────────────────────────────────────── */
+@media ( max-width: 768px ) {
+
+	.enix-accordion-wrapper,
+	.enix-accordion-wrapper.enix-mobile-image-first,
+	.enix-accordion-wrapper.enix-mobile-accordion-first {
+		flex-direction: column;
+	}
+
+	.enix-accordion-left,
+	.enix-accordion-right {
+		flex: 1 1 100%;
+		width: 100%;
+	}
+
+	/* Image first on mobile (default) */
+	.enix-accordion-wrapper.enix-mobile-image-first .enix-accordion-right {
+		order: -1;
+	}
+	.enix-accordion-wrapper.enix-mobile-image-first .enix-accordion-left {
+		order: 1;
+	}
+
+	/* Accordion first on mobile */
+	.enix-accordion-wrapper.enix-mobile-accordion-first .enix-accordion-left {
+		order: -1;
+	}
+	.enix-accordion-wrapper.enix-mobile-accordion-first .enix-accordion-right {
+		order: 1;
+	}
+}
+
+/* ─── Enix Faded Heading ────────────────────────────────────────────────── */
+.enix-faded-heading { display: block; }
+.enix-faded-heading-title {
+    margin: 0;
+    display: block;
+    word-break: break-word;
+}
+.enix-faded-heading-title a {
+    color: inherit;
+    text-decoration: none;
+}
+/* Fallback for older browsers when has-edge-fade is on but no slider value yet */
+.enix-faded-heading.has-edge-fade {
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+}
